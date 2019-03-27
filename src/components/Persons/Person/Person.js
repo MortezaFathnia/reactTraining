@@ -1,21 +1,48 @@
-import React from 'react';
-import Radium from 'radium';
+import React,{Component} from 'react';
+import classes from './Person.module.css';
+import withClasses from '../../../hoc/withClass';
+import Aux from '../../../hoc/Aux';
+// import PropTypes from 'prop-types';
 
-import './Person.css';
 
-const person=(props)=>{
-    const style={
-        '@media (min-width:500)':{
-            width:'450px'
-        }
+class Person extends Component{
+    constructor(props){
+        super(props);
+        this.inputElement=React.createRef();
     }
-    return( 
-    <div className="Person" style={style}>
-        <p onClick={props.click}>I'm a {props.name} and I am {props.age} years old!</p>
-        <p>{props.children}</p>
-        <input type="text" onChange={props.changed} value={props.name}/>
-    </div>
-    )
-}
+    componentDidMount(){
+        // if(this.props.position==0){
+        //   this.inputElement.focus(); 
+        // }
+        //todo:it is not working!!
+        // this.lastPersonRef.current.focus(); 
 
-export default Radium(person);
+    }
+
+    focus(){
+        this.inputElement.current.focus();
+    }
+
+    render(){
+        return( 
+            <Aux>
+                <p onClick={this.props.click}>I'm a {this.props.name} and I am {this.props.age} years old!</p>
+                <p>{this.props.children}</p>
+                <input 
+                    type="text" 
+                    ref={this.inputElement}
+                    onChange={this.props.changed}
+                    value={this.props.name}/>
+            </Aux>
+            )
+    }
+}
+//todo: why is not working?
+// Person.prototype={
+//     click:PropTypes.func,
+//     name:PropTypes.string,
+//     age:PropTypes.number,
+//     changed:PropTypes.func
+// };
+
+export default Person;
